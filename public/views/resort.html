@@ -1,0 +1,112 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+        	<a class="navbar-brand nav-element" id="logo" href="/">SnowPro</a>
+    	</div>
+    	<ul class="nav navbar-nav navbar-right">
+			<li><a href="#" class="nav-element">Login</a></li>
+		</ul>
+	</div> <!--.container-->
+</nav>
+
+<div class="nav-fill"></div>
+
+<div class="picture-container">
+	
+	<img ng-src="{{resort.img}}">
+
+	<div class="resort-info">
+		<h1>{{resort.name}}</h1>
+		<p id="city">{{resort.city}}</p>
+		<h2>{{resort.temp}}</h2>
+	</div> <!--.resort-info-->
+
+	<div class="weather-container">
+		<div class="weather-info" id="today">
+			<h1>Today</h1>
+			<img src="img/weather/sun79.png">
+			<div class="temperature">
+				{{resort.weather[0].high}}/<span class="low">{{resort.weather[0].low}}</span>
+			</div>
+			<span class="snowfall">{{resort.weather[0].snow}}</span>
+		</div>
+		<div class="weather-info" id="tonight">
+			<h1>Tonight</h1>
+			<img src="img/weather/snowflake3.png">
+			<div class="temperature">
+				{{resort.weather[1].high}}/<span class="low">{{resort.weather[1].low}}</span>
+			</div>
+			<span class="snowfall">{{resort.weather[1].snow}}</span>
+		</div>
+		<div class="weather-info" id="tomorrow">
+			<h1>Tomorrow</h1>
+			<img src="img/weather/snowflake3.png">
+			<div class="temperature">
+				{{resort.weather[2].high}}/<span class="low">{{resort.weather[2].low}}</span>
+			</div>
+			<span class="snowfall">{{resort.weather[2].snow}}</span>
+		</div>
+	</div>
+
+</div><!--.picture-container-->
+
+<div class="main-container">
+	<div class="lift-selector">
+		<ul>
+			<li ng-repeat="lift in lifts" ng-click="setFilter(lift, $event);" ng-class="{active: isSelected(lift)}">
+				{{lift.liftName}}
+			</li>
+		</ul>
+		
+	</div>
+
+	<div class="table-container trails">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th ng-click="predicate = 'name'; reverse=!reverse;"><span class="pointer">Trail</span></th>
+					<th ng-click="predicate = 'rating'; reverse=!reverse;" ><span class="pointer">Rating</span></th>
+					<th ng-click="predicate = 'status'; reverse=!reverse;"><span class="pointer">Status</span></th>
+					<th ng-click="predicate = 'groomed'; reverse=!reverse;"><span class="pointer">Groomed</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="trail in trails | filter:liftFilter | orderBy:predicate:reverse">
+					<td>{{trail.name}}</td><!--trail-->
+					<td><img id="rating" ng-src="{{trail.rating}}"></td><!--rating-->
+					<td>{{trail.status}}</td><!--status-->
+					<td>{{trail.groomed}}</td><!--groomed-->
+				</tr>
+			</tbody>
+		</table>
+	</div> <!--.table-container-->
+</div> <!--.main-container-->
+
+<script>
+
+	$(document).ready(function() {
+		//adds fade effect on page load
+		$(".resort-info").hide();
+		$(".weather-info").hide();
+		$(".resort-info").fadeIn(1000);
+		$("#today").fadeIn(800);
+		$("#tonight").fadeIn(1500);
+		$("#tomorrow").fadeIn(2200);
+	});
+
+</script>
+
+<script>
+
+	// scroll up function for the weather info
+	$(function() {
+
+		$(".weather-info").mouseenter(function() {
+			$(this).animate({margin:"-300px 0px 0px 15px"}, {queue: false, duration:300});
+		}).mouseleave(function() {
+			$(this).animate({margin:"0px 0px 0px 15px"}, {queue: false, duration: 300});
+		});
+
+	});
+
+</script>
